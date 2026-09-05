@@ -159,7 +159,7 @@ priority
 + deadline proximity
 + elapsed work window
 + age
-````
+```
 
 The theoretical maximum is 105 points.
 
