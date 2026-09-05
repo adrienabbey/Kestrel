@@ -1,0 +1,1039 @@
+{
+  "name": "Build Kestrel Today",
+  "type": "SHARED",
+  "summary": "",
+  "description": "",
+  "tags": [],
+  "blogUrl": "",
+  "metadata": {
+    "externalId": "WSyMHhhi2po2KlNZU0wNJ"
+  },
+  "author": "Adrien Abbey",
+  "categories": [],
+  "pieces": [
+    "@activepieces/piece-schedule",
+    "@activepieces/piece-http",
+    "@activepieces/piece-google-tasks"
+  ],
+  "flows": [
+    {
+      "displayName": "Build Kestrel Today",
+      "trigger": {
+        "name": "trigger",
+        "valid": true,
+        "displayName": "Every Hour",
+        "nextAction": {
+          "name": "step_1",
+          "skip": false,
+          "type": "PIECE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "url": "{{variables['NEXTCLOUD_BASE_URL']}}/remote.php/dav/calendars/{{variables['NEXTCLOUD_USERNAME']}}/{{variables['NEXTCLOUD_PERSONAL_COLLECTION']}}/",
+              "body": {
+                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<cal:calendar-query\n    xmlns:d=\"DAV:\"\n    xmlns:cal=\"urn:ietf:params:xml:ns:caldav\">\n  <d:prop>\n    <d:getetag />\n    <cal:calendar-data>\n      <cal:comp name=\"VCALENDAR\">\n        <cal:prop name=\"VERSION\" />\n        <cal:comp name=\"VTODO\">\n          <cal:prop name=\"UID\" />\n          <cal:prop name=\"SUMMARY\" />\n          <cal:prop name=\"DESCRIPTION\" />\n          <cal:prop name=\"CREATED\" />\n          <cal:prop name=\"DTSTART\" />\n          <cal:prop name=\"DUE\" />\n          <cal:prop name=\"PRIORITY\" />\n          <cal:prop name=\"STATUS\" />\n          <cal:prop name=\"PERCENT-COMPLETE\" />\n          <cal:prop name=\"RELATED-TO\" />\n        </cal:comp>\n      </cal:comp>\n    </cal:calendar-data>\n  </d:prop>\n  <cal:filter>\n    <cal:comp-filter name=\"VCALENDAR\">\n      <cal:comp-filter name=\"VTODO\">\n        <cal:prop-filter name=\"COMPLETED\">\n          <cal:is-not-defined />\n        </cal:prop-filter>\n      </cal:comp-filter>\n    </cal:comp-filter>\n  </cal:filter>\n</cal:calendar-query>"
+              },
+              "method": "REPORT",
+              "headers": {
+                "Depth": "1",
+                "Content-Type": "application/xml; charset=utf-8"
+              },
+              "authType": "BASIC",
+              "body_type": "raw",
+              "use_proxy": false,
+              "authFields": {
+                "password": "{{variables['NEXTCLOUD_APP_PASSWORD']}}",
+                "username": "{{variables['NEXTCLOUD_USERNAME']}}"
+              },
+              "failureMode": "continue_none",
+              "queryParams": {},
+              "proxy_settings": {},
+              "followRedirects": false,
+              "response_is_binary": false
+            },
+            "pieceName": "@activepieces/piece-http",
+            "actionName": "send_request",
+            "sampleData": {},
+            "pieceVersion": "0.11.20",
+            "propertySettings": {
+              "url": {
+                "type": "MANUAL"
+              },
+              "body": {
+                "type": "MANUAL",
+                "schema": {
+                  "data": {
+                    "type": "LONG_TEXT",
+                    "required": true,
+                    "displayName": "Raw Body"
+                  }
+                }
+              },
+              "method": {
+                "type": "DYNAMIC"
+              },
+              "headers": {
+                "type": "MANUAL"
+              },
+              "timeout": {
+                "type": "MANUAL"
+              },
+              "authType": {
+                "type": "MANUAL"
+              },
+              "body_type": {
+                "type": "MANUAL"
+              },
+              "use_proxy": {
+                "type": "MANUAL"
+              },
+              "authFields": {
+                "type": "MANUAL",
+                "schema": {
+                  "password": {
+                    "type": "SHORT_TEXT",
+                    "required": true,
+                    "description": "Stored in the flow and visible in exports. Prefer HTTP (OAuth2).",
+                    "displayName": "Password"
+                  },
+                  "username": {
+                    "type": "SHORT_TEXT",
+                    "required": true,
+                    "description": "The username for authentication.",
+                    "displayName": "Username"
+                  }
+                }
+              },
+              "failureMode": {
+                "type": "MANUAL"
+              },
+              "queryParams": {
+                "type": "MANUAL"
+              },
+              "proxy_settings": {
+                "type": "MANUAL"
+              },
+              "followRedirects": {
+                "type": "MANUAL"
+              },
+              "response_is_binary": {
+                "type": "MANUAL"
+              }
+            },
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": false
+              }
+            }
+          },
+          "nextAction": {
+            "name": "step_3",
+            "skip": false,
+            "type": "PIECE",
+            "valid": true,
+            "settings": {
+              "input": {
+                "url": "{{variables['NEXTCLOUD_BASE_URL']}}/remote.php/dav/calendars/{{variables['NEXTCLOUD_USERNAME']}}/{{variables['NEXTCLOUD_CLASSES_COLLECTION']}}/",
+                "body": {
+                  "data": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<cal:calendar-query\n    xmlns:d=\"DAV:\"\n    xmlns:cal=\"urn:ietf:params:xml:ns:caldav\">\n  <d:prop>\n    <d:getetag />\n    <cal:calendar-data>\n      <cal:comp name=\"VCALENDAR\">\n        <cal:prop name=\"VERSION\" />\n        <cal:comp name=\"VTODO\">\n          <cal:prop name=\"UID\" />\n          <cal:prop name=\"SUMMARY\" />\n          <cal:prop name=\"DESCRIPTION\" />\n          <cal:prop name=\"CREATED\" />\n          <cal:prop name=\"DTSTART\" />\n          <cal:prop name=\"DUE\" />\n          <cal:prop name=\"PRIORITY\" />\n          <cal:prop name=\"STATUS\" />\n          <cal:prop name=\"PERCENT-COMPLETE\" />\n          <cal:prop name=\"RELATED-TO\" />\n        </cal:comp>\n      </cal:comp>\n    </cal:calendar-data>\n  </d:prop>\n  <cal:filter>\n    <cal:comp-filter name=\"VCALENDAR\">\n      <cal:comp-filter name=\"VTODO\">\n        <cal:prop-filter name=\"COMPLETED\">\n          <cal:is-not-defined />\n        </cal:prop-filter>\n      </cal:comp-filter>\n    </cal:comp-filter>\n  </cal:filter>\n</cal:calendar-query>"
+                },
+                "method": "REPORT",
+                "headers": {
+                  "Depth": "1",
+                  "Content-Type": "application/xml; charset=utf-8"
+                },
+                "authType": "BASIC",
+                "body_type": "raw",
+                "use_proxy": false,
+                "authFields": {
+                  "password": "{{variables['NEXTCLOUD_APP_PASSWORD']}}",
+                  "username": "{{variables['NEXTCLOUD_USERNAME']}}"
+                },
+                "failureMode": "continue_none",
+                "queryParams": {},
+                "proxy_settings": {},
+                "followRedirects": false,
+                "response_is_binary": false
+              },
+              "pieceName": "@activepieces/piece-http",
+              "actionName": "send_request",
+              "sampleData": {},
+              "pieceVersion": "0.11.20",
+              "propertySettings": {
+                "url": {
+                  "type": "MANUAL"
+                },
+                "body": {
+                  "type": "MANUAL",
+                  "schema": {
+                    "data": {
+                      "type": "LONG_TEXT",
+                      "required": true,
+                      "displayName": "Raw Body"
+                    }
+                  }
+                },
+                "method": {
+                  "type": "DYNAMIC"
+                },
+                "headers": {
+                  "type": "MANUAL"
+                },
+                "timeout": {
+                  "type": "MANUAL"
+                },
+                "authType": {
+                  "type": "MANUAL"
+                },
+                "body_type": {
+                  "type": "MANUAL"
+                },
+                "use_proxy": {
+                  "type": "MANUAL"
+                },
+                "authFields": {
+                  "type": "MANUAL",
+                  "schema": {
+                    "password": {
+                      "type": "SHORT_TEXT",
+                      "required": true,
+                      "description": "Stored in the flow and visible in exports. Prefer HTTP (OAuth2).",
+                      "displayName": "Password"
+                    },
+                    "username": {
+                      "type": "SHORT_TEXT",
+                      "required": true,
+                      "description": "The username for authentication.",
+                      "displayName": "Username"
+                    }
+                  }
+                },
+                "failureMode": {
+                  "type": "MANUAL"
+                },
+                "queryParams": {
+                  "type": "MANUAL"
+                },
+                "proxy_settings": {
+                  "type": "MANUAL"
+                },
+                "followRedirects": {
+                  "type": "MANUAL"
+                },
+                "response_is_binary": {
+                  "type": "MANUAL"
+                }
+              },
+              "errorHandlingOptions": {
+                "retryOnFailure": {
+                  "value": false
+                },
+                "continueOnFailure": {
+                  "value": false
+                }
+              }
+            },
+            "nextAction": {
+              "name": "step_2",
+              "skip": false,
+              "type": "CODE",
+              "valid": true,
+              "settings": {
+                "input": {
+                  "timezone": "{{variables['KESTREL_TIMEZONE']}}",
+                  "classesBody": "{{step_3['output']['body']}}",
+                  "personalBody": "{{step_1['output']['body']}}"
+                },
+                "sampleData": {},
+                "sourceCode": {
+                  "code": "export const code = async (inputs) => {\n  const PLANNING_TIMEZONE =\n    String(inputs.timezone ?? \"\").trim();\n\n  if (!PLANNING_TIMEZONE) {\n    throw new Error(\n      \"KESTREL_TIMEZONE is not configured\"\n    );\n  }\n\n  try {\n    new Intl.DateTimeFormat(\n      \"en-US\",\n      {\n        timeZone: PLANNING_TIMEZONE,\n      }\n    ).format(new Date());\n  } catch {\n    throw new Error(\n      `Invalid Kestrel timezone: ${PLANNING_TIMEZONE}`\n    );\n  }\n\n  // ----------------------------------------------------------\n  // XML / iCalendar helpers\n  // ----------------------------------------------------------\n\n  const decodeXml = (text) =>\n    String(text ?? \"\")\n      .replace(/&quot;/g, '\"')\n      .replace(/&apos;/g, \"'\")\n      .replace(/&lt;/g, \"<\")\n      .replace(/&gt;/g, \">\")\n      .replace(/&amp;/g, \"&\");\n\n  const unescapeICalText = (text) =>\n    String(text ?? \"\")\n      .replace(/\\\\n/gi, \"\\n\")\n      .replace(/\\\\,/g, \",\")\n      .replace(/\\\\;/g, \";\")\n      .replace(/\\\\\\\\/g, \"\\\\\");\n\n  const unfoldLines = (text) => {\n    const rawLines =\n      String(text ?? \"\").split(/\\r?\\n/);\n\n    const lines = [];\n\n    for (const line of rawLines) {\n      if (\n        lines.length > 0 &&\n        (\n          line.startsWith(\" \") ||\n          line.startsWith(\"\\t\")\n        )\n      ) {\n        lines[lines.length - 1] +=\n          line.slice(1);\n      } else {\n        lines.push(line);\n      }\n    }\n\n    return lines;\n  };\n\n  const parseProperty = (line) => {\n    const colon =\n      line.indexOf(\":\");\n\n    if (colon === -1) {\n      return null;\n    }\n\n    const left =\n      line.slice(0, colon);\n\n    const value =\n      line.slice(colon + 1);\n\n    const parts =\n      left.split(\";\");\n\n    const name =\n      parts[0].toUpperCase();\n\n    const params = {};\n\n    for (\n      const part of parts.slice(1)\n    ) {\n      const equals =\n        part.indexOf(\"=\");\n\n      if (equals === -1) {\n        continue;\n      }\n\n      const key =\n        part\n          .slice(0, equals)\n          .toUpperCase();\n\n      const paramValue =\n        part.slice(equals + 1);\n\n      params[key] =\n        paramValue;\n    }\n\n    return {\n      name,\n      params,\n      value,\n    };\n  };\n\n  const getProperty = (\n    properties,\n    name\n  ) =>\n    properties.find(\n      (property) =>\n        property.name === name\n    ) ?? null;\n\n  const parseDateProperty = (\n    property\n  ) => {\n    if (!property) {\n      return null;\n    }\n\n    return {\n      value:\n        property.value,\n\n      timezone:\n        property.params.TZID ??\n        null,\n    };\n  };\n\n  // ----------------------------------------------------------\n  // Parse one CalDAV collection\n  // ----------------------------------------------------------\n\n  const parseCollection = (\n    xml,\n    listName\n  ) => {\n    const tasks = [];\n\n    const responses =\n      String(xml ?? \"\").match(\n        /<d:response>[\\s\\S]*?<\\/d:response>/g\n      ) ?? [];\n\n    for (const response of responses) {\n      const hrefMatch =\n        response.match(\n          /<d:href>([\\s\\S]*?)<\\/d:href>/\n        );\n\n      const etagMatch =\n        response.match(\n          /<d:getetag>([\\s\\S]*?)<\\/d:getetag>/\n        );\n\n      const calendarDataMatch =\n        response.match(\n          /<cal:calendar-data>([\\s\\S]*?)<\\/cal:calendar-data>/\n        );\n\n      if (!calendarDataMatch) {\n        continue;\n      }\n\n      const href =\n        hrefMatch\n          ? decodeXml(\n              hrefMatch[1]\n            )\n          : null;\n\n      const etag =\n        etagMatch\n          ? decodeXml(\n              etagMatch[1]\n            )\n          : null;\n\n      const calendarData =\n        decodeXml(\n          calendarDataMatch[1]\n        );\n\n      const todoBlocks =\n        calendarData.match(\n          /BEGIN:VTODO[\\s\\S]*?END:VTODO/g\n        ) ?? [];\n\n      for (const block of todoBlocks) {\n        const properties =\n          unfoldLines(block)\n            .map(parseProperty)\n            .filter(Boolean);\n\n        const uid =\n          getProperty(\n            properties,\n            \"UID\"\n          );\n\n        const summary =\n          getProperty(\n            properties,\n            \"SUMMARY\"\n          );\n\n        const description =\n          getProperty(\n            properties,\n            \"DESCRIPTION\"\n          );\n\n        const created =\n          getProperty(\n            properties,\n            \"CREATED\"\n          );\n\n        const priority =\n          getProperty(\n            properties,\n            \"PRIORITY\"\n          );\n\n        const status =\n          getProperty(\n            properties,\n            \"STATUS\"\n          );\n\n        const percentComplete =\n          getProperty(\n            properties,\n            \"PERCENT-COMPLETE\"\n          );\n\n        const relatedTo =\n          getProperty(\n            properties,\n            \"RELATED-TO\"\n          );\n\n        tasks.push({\n          source:\n            \"nextcloud\",\n\n          list:\n            listName,\n\n          href,\n          etag,\n\n          uid:\n            uid?.value ?? null,\n\n          summary:\n            summary\n              ? unescapeICalText(\n                  summary.value\n                )\n              : null,\n\n          description:\n            description\n              ? unescapeICalText(\n                  description.value\n                )\n              : null,\n\n          created:\n            created?.value ?? null,\n\n          start:\n            parseDateProperty(\n              getProperty(\n                properties,\n                \"DTSTART\"\n              )\n            ),\n\n          due:\n            parseDateProperty(\n              getProperty(\n                properties,\n                \"DUE\"\n              )\n            ),\n\n          priority:\n            priority\n              ? Number(\n                  priority.value\n                )\n              : null,\n\n          status:\n            status?.value ?? null,\n\n          percentComplete:\n            percentComplete\n              ? Number(\n                  percentComplete.value\n                )\n              : 0,\n\n          relatedTo:\n            relatedTo?.value ??\n            null,\n        });\n      }\n    }\n\n    return tasks;\n  };\n\n  // ----------------------------------------------------------\n  // Date helpers\n  // ----------------------------------------------------------\n\n  const dateToKey = (\n    date,\n    timeZone\n  ) => {\n    const parts =\n      new Intl.DateTimeFormat(\n        \"en-US\",\n        {\n          timeZone,\n          year: \"numeric\",\n          month: \"2-digit\",\n          day: \"2-digit\",\n        }\n      ).formatToParts(date);\n\n    const values = {};\n\n    for (const part of parts) {\n      if (\n        part.type === \"year\" ||\n        part.type === \"month\" ||\n        part.type === \"day\"\n      ) {\n        values[part.type] =\n          part.value;\n      }\n    }\n\n    return (\n      `${values.year}` +\n      `${values.month}` +\n      `${values.day}`\n    );\n  };\n\n  const getTodayKey = () =>\n    dateToKey(\n      new Date(),\n      PLANNING_TIMEZONE\n    );\n\n  const getDateKey = (\n    dateProperty\n  ) => {\n    if (\n      !dateProperty?.value\n    ) {\n      return null;\n    }\n\n    const match =\n      String(\n        dateProperty.value\n      ).match(/^(\\d{8})/);\n\n    return match\n      ? match[1]\n      : null;\n  };\n\n  const parseUtcICalTimestamp = (\n    value\n  ) => {\n    if (!value) {\n      return null;\n    }\n\n    const match =\n      String(value).match(\n        /^(\\d{4})(\\d{2})(\\d{2})T(\\d{2})(\\d{2})(\\d{2})Z$/\n      );\n\n    if (!match) {\n      return null;\n    }\n\n    const [\n      ,\n      year,\n      month,\n      day,\n      hour,\n      minute,\n      second,\n    ] = match;\n\n    return new Date(\n      Date.UTC(\n        Number(year),\n        Number(month) - 1,\n        Number(day),\n        Number(hour),\n        Number(minute),\n        Number(second)\n      )\n    );\n  };\n\n  const keyToUtcMidnight = (\n    key\n  ) => {\n    if (\n      !key ||\n      !/^\\d{8}$/.test(key)\n    ) {\n      return null;\n    }\n\n    const year =\n      Number(\n        key.slice(0, 4)\n      );\n\n    const month =\n      Number(\n        key.slice(4, 6)\n      );\n\n    const day =\n      Number(\n        key.slice(6, 8)\n      );\n\n    return Date.UTC(\n      year,\n      month - 1,\n      day\n    );\n  };\n\n  const differenceInDays = (\n    olderKey,\n    newerKey\n  ) => {\n    const older =\n      keyToUtcMidnight(\n        olderKey\n      );\n\n    const newer =\n      keyToUtcMidnight(\n        newerKey\n      );\n\n    if (\n      older === null ||\n      newer === null\n    ) {\n      return null;\n    }\n\n    return Math.max(\n      0,\n      Math.floor(\n        (newer - older) /\n        86400000\n      )\n    );\n  };\n\n  // ----------------------------------------------------------\n  // Parse source collections\n  // ----------------------------------------------------------\n\n  const personalTasks =\n    parseCollection(\n      inputs.personalBody,\n      \"Personal\"\n    );\n\n  const classTasks =\n    parseCollection(\n      inputs.classesBody,\n      \"Classes\"\n    );\n\n  const tasks = [\n    ...personalTasks,\n    ...classTasks,\n  ];\n\n  const today =\n    getTodayKey();\n\n  // ----------------------------------------------------------\n  // Normalize planning metadata.\n  //\n  // Selection and stale-task policy belong to Planner v2.\n  // ----------------------------------------------------------\n\n  const plannedTasks =\n    tasks.map((task) => {\n      const startDate =\n        getDateKey(\n          task.start\n        );\n\n      const dueDate =\n        getDateKey(\n          task.due\n        );\n\n      const createdTimestamp =\n        parseUtcICalTimestamp(\n          task.created\n        );\n\n      const createdDate =\n        createdTimestamp\n          ? dateToKey(\n              createdTimestamp,\n              PLANNING_TIMEZONE\n            )\n          : null;\n\n      const ageDays =\n        differenceInDays(\n          createdDate,\n          today\n        );\n\n      let state;\n\n      if (\n        startDate &&\n        startDate > today\n      ) {\n        state =\n          \"future\";\n      } else if (\n        dueDate &&\n        dueDate < today\n      ) {\n        state =\n          \"overdue\";\n      } else if (\n        dueDate === today\n      ) {\n        state =\n          \"due_today\";\n      } else if (\n        !startDate &&\n        !dueDate\n      ) {\n        state =\n          \"undated\";\n      } else {\n        state =\n          \"available\";\n      }\n\n      return {\n        ...task,\n\n        planning: {\n          state,\n          startDate,\n          dueDate,\n          createdDate,\n          ageDays,\n        },\n      };\n    });\n\n  // ----------------------------------------------------------\n  // Outputs consumed by Planner v2\n  // ----------------------------------------------------------\n\n  return {\n    count:\n      plannedTasks.length,\n\n    counts: {\n      Personal:\n        personalTasks.length,\n\n      Classes:\n        classTasks.length,\n    },\n\n    planningDate:\n      today,\n\n    timezone:\n      PLANNING_TIMEZONE,\n\n    tasks:\n      plannedTasks,\n  };\n};",
+                  "packageJson": "{}"
+                },
+                "errorHandlingOptions": {
+                  "retryOnFailure": {
+                    "value": false
+                  },
+                  "continueOnFailure": {
+                    "value": false
+                  }
+                }
+              },
+              "nextAction": {
+                "name": "step_4",
+                "skip": false,
+                "type": "CODE",
+                "valid": true,
+                "settings": {
+                  "input": {
+                    "tasks": "{{step_2['output']['tasks']}}",
+                    "planningDate": "{{step_2['output']['planningDate']}}"
+                  },
+                  "sampleData": {},
+                  "sourceCode": {
+                    "code": "export const code = async (inputs) => {\n  const tasks = Array.isArray(inputs.tasks)\n    ? inputs.tasks\n    : [];\n\n  const planningDate = String(\n    inputs.planningDate ?? \"\"\n  );\n\n  if (!/^\\d{8}$/.test(planningDate)) {\n    throw new Error(\n      `Invalid planning date: ${inputs.planningDate}`\n    );\n  }\n\n  // ----------------------------------------------------------\n  // Policy\n  // ----------------------------------------------------------\n\n  const TARGET_ACTIONABLE = 6;\n\n  // Inclusive of today:\n  //   0 = today\n  //   1 = tomorrow\n  //   2 = day after tomorrow\n  const GENERAL_MANDATORY_DAYS = 2;\n\n  // Classes get a larger visibility window:\n  // today + next 6 days = 7 calendar dates total.\n  const CLASS_MANDATORY_DAYS = 6;\n\n  // High-priority class work can receive an early-attention\n  // slot considerably farther in advance.\n  const HIGH_CLASS_EARLY_DAYS = 21;\n\n  const STALE_REVIEW_DAYS = 30;\n\n  // ----------------------------------------------------------\n  // Date helpers\n  // ----------------------------------------------------------\n\n  const DAY_MS = 24 * 60 * 60 * 1000;\n\n  const normalizeDateKey = (value) => {\n    const text = String(value ?? \"\");\n\n    return /^\\d{8}$/.test(text)\n      ? text\n      : null;\n  };\n\n  const dateKeyToMs = (key) => {\n    const normalized =\n      normalizeDateKey(key);\n\n    if (!normalized) {\n      return null;\n    }\n\n    const year =\n      Number(normalized.slice(0, 4));\n\n    const month =\n      Number(normalized.slice(4, 6));\n\n    const day =\n      Number(normalized.slice(6, 8));\n\n    return Date.UTC(\n      year,\n      month - 1,\n      day\n    );\n  };\n\n  const differenceInDays = (\n    earlierKey,\n    laterKey\n  ) => {\n    const earlier =\n      dateKeyToMs(earlierKey);\n\n    const later =\n      dateKeyToMs(laterKey);\n\n    if (\n      earlier === null ||\n      later === null\n    ) {\n      return null;\n    }\n\n    return Math.round(\n      (later - earlier) / DAY_MS\n    );\n  };\n\n  const round1 = (value) =>\n    Math.round(value * 10) / 10;\n\n  const clamp = (\n    value,\n    minimum,\n    maximum\n  ) =>\n    Math.max(\n      minimum,\n      Math.min(maximum, value)\n    );\n\n  // ----------------------------------------------------------\n  // Identity / metadata helpers\n  // ----------------------------------------------------------\n\n  const getTaskKey = (task) =>\n    [\n      task.list ?? \"\",\n      task.uid ?? \"\",\n      task.href ?? \"\",\n      task.summary ?? \"\",\n    ].join(\"|\");\n\n  const isClassTask = (task) =>\n    String(task.list ?? \"\")\n      .trim()\n      .toLowerCase() === \"classes\";\n\n  const normalizePriority = (value) => {\n    if (\n      value === null ||\n      value === undefined ||\n      value === \"\"\n    ) {\n      return {\n        band: \"unspecified\",\n        score: 10,\n      };\n    }\n\n    const numeric = Number(value);\n\n    if (\n      !Number.isFinite(numeric) ||\n      numeric === 0\n    ) {\n      return {\n        band: \"unspecified\",\n        score: 10,\n      };\n    }\n\n    if (\n      numeric >= 1 &&\n      numeric <= 4\n    ) {\n      return {\n        band: \"high\",\n        score: 30,\n      };\n    }\n\n    if (numeric === 5) {\n      return {\n        band: \"normal\",\n        score: 15,\n      };\n    }\n\n    if (\n      numeric >= 6 &&\n      numeric <= 9\n    ) {\n      return {\n        band: \"low\",\n        score: 0,\n      };\n    }\n\n    return {\n      band: \"unspecified\",\n      score: 10,\n    };\n  };\n\n  // ----------------------------------------------------------\n  // Enrich every normalized task with planning metadata.\n  // ----------------------------------------------------------\n\n  const enriched = tasks.map((task) => {\n    const createdDate =\n      normalizeDateKey(\n        task.planning?.createdDate\n      );\n\n    const startDate =\n      normalizeDateKey(\n        task.planning?.startDate\n      );\n\n    const dueDate =\n      normalizeDateKey(\n        task.planning?.dueDate\n      );\n\n    const priority =\n      normalizePriority(task.priority);\n\n    const classTask =\n      isClassTask(task);\n\n    const ageDays =\n      Number.isFinite(\n        Number(task.planning?.ageDays)\n      )\n        ? Number(task.planning.ageDays)\n        : null;\n\n    const remainingDays =\n      dueDate\n        ? differenceInDays(\n            planningDate,\n            dueDate\n          )\n        : null;\n\n    const dateConflict =\n      Boolean(\n        startDate &&\n        dueDate &&\n        startDate > dueDate\n      );\n\n    // Start means \"don't bother me before this date.\"\n    //\n    // A malformed start > due combination is handled\n    // separately as a conflict rather than silently hidden.\n    const futureStart =\n      Boolean(\n        startDate &&\n        startDate > planningDate &&\n        !dateConflict\n      );\n\n    const overdue =\n      remainingDays !== null &&\n      remainingDays < 0;\n\n    const dueGeneralSoon =\n      remainingDays !== null &&\n      remainingDays >= 0 &&\n      remainingDays <=\n        GENERAL_MANDATORY_DAYS;\n\n    const dueClassSoon =\n      classTask &&\n      remainingDays !== null &&\n      remainingDays >= 0 &&\n      remainingDays <=\n        CLASS_MANDATORY_DAYS;\n\n    const mandatory =\n      dateConflict ||\n      (\n        !futureStart &&\n        (\n          overdue ||\n          dueGeneralSoon ||\n          dueClassSoon\n        )\n      );\n\n    const earlyAttention =\n      !futureStart &&\n      !mandatory &&\n      classTask &&\n      priority.band === \"high\" &&\n      remainingDays !== null &&\n      remainingDays >= 0 &&\n      remainingDays <=\n        HIGH_CLASS_EARLY_DAYS;\n\n    // --------------------------------------------------------\n    // Score: priority\n    // --------------------------------------------------------\n\n    const priorityScore =\n      priority.score;\n\n    // --------------------------------------------------------\n    // Score: Classes\n    // --------------------------------------------------------\n\n    const classScore =\n      classTask ? 15 : 0;\n\n    // --------------------------------------------------------\n    // Score: deadline proximity\n    //\n    // Gradually rises over the final 30 days.\n    // Mandatory inclusion is handled separately above.\n    // --------------------------------------------------------\n\n    let deadlineScore = 0;\n\n    if (remainingDays !== null) {\n      if (remainingDays < 0) {\n        deadlineScore = 25;\n      } else if (remainingDays <= 30) {\n        deadlineScore =\n          25 *\n          (\n            1 -\n            remainingDays / 30\n          );\n      }\n    }\n\n    deadlineScore =\n      round1(\n        clamp(\n          deadlineScore,\n          0,\n          25\n        )\n      );\n\n    // --------------------------------------------------------\n    // Score: elapsed work window\n    //\n    // Prefer DTSTART as the point where the task becomes\n    // available. Otherwise use CREATED.\n    //\n    // Example:\n    // created 14 days ago, due in 7 days:\n    // 14 / 21 = 67% of available window consumed.\n    // --------------------------------------------------------\n\n    const availableDate =\n      startDate ?? createdDate;\n\n    let totalWindowDays = null;\n    let elapsedWindowDays = null;\n    let windowProgress = null;\n    let windowScore = 0;\n\n    if (\n      availableDate &&\n      dueDate &&\n      availableDate <= planningDate\n    ) {\n      totalWindowDays =\n        differenceInDays(\n          availableDate,\n          dueDate\n        );\n\n      elapsedWindowDays =\n        differenceInDays(\n          availableDate,\n          planningDate\n        );\n\n      if (\n        totalWindowDays !== null &&\n        totalWindowDays > 0 &&\n        elapsedWindowDays !== null\n      ) {\n        windowProgress =\n          clamp(\n            elapsedWindowDays /\n              totalWindowDays,\n            0,\n            1\n          );\n\n        windowScore =\n          round1(\n            windowProgress * 25\n          );\n      }\n    }\n\n    // --------------------------------------------------------\n    // Score: age / neglect\n    //\n    // Saturates at 30 days so ancient low-priority tasks do\n    // not become infinitely urgent simply by surviving.\n    // --------------------------------------------------------\n\n    const ageScore =\n      ageDays === null\n        ? 0\n        : round1(\n            (\n              clamp(\n                ageDays,\n                0,\n                30\n              ) / 30\n            ) * 10\n          );\n\n    const totalScore =\n      round1(\n        priorityScore +\n        classScore +\n        deadlineScore +\n        windowScore +\n        ageScore\n      );\n\n    return {\n      task,\n      key: getTaskKey(task),\n\n      title:\n        task.summary ??\n        \"(Untitled task)\",\n\n      classTask,\n\n      rawPriority:\n        task.priority ?? null,\n\n      priorityBand:\n        priority.band,\n\n      createdDate,\n      startDate,\n      dueDate,\n      availableDate,\n\n      ageDays,\n\n      remainingDays,\n\n      futureStart,\n      dateConflict,\n      overdue,\n      mandatory,\n      earlyAttention,\n\n      totalWindowDays,\n      elapsedWindowDays,\n\n      windowProgress:\n        windowProgress === null\n          ? null\n          : round1(\n              windowProgress * 100\n            ),\n\n      score: totalScore,\n\n      scoreBreakdown: {\n        priority: priorityScore,\n        class: classScore,\n        deadline: deadlineScore,\n        workWindow: windowScore,\n        age: ageScore,\n      },\n    };\n  });\n\n  // ----------------------------------------------------------\n  // Sorting\n  // ----------------------------------------------------------\n\n  const compareFocus = (a, b) => {\n    if (a.score !== b.score) {\n      return b.score - a.score;\n    }\n\n    const aRemaining =\n      a.remainingDays ?? 999999;\n\n    const bRemaining =\n      b.remainingDays ?? 999999;\n\n    if (aRemaining !== bRemaining) {\n      return aRemaining - bRemaining;\n    }\n\n    const aAge =\n      a.ageDays ?? 0;\n\n    const bAge =\n      b.ageDays ?? 0;\n\n    if (aAge !== bAge) {\n      return bAge - aAge;\n    }\n\n    return a.title.localeCompare(\n      b.title\n    );\n  };\n\n  const compareMandatory = (a, b) => {\n    const aOverdue =\n      a.remainingDays !== null &&\n      a.remainingDays < 0;\n\n    const bOverdue =\n      b.remainingDays !== null &&\n      b.remainingDays < 0;\n\n    // Overdue tasks appear before not-yet-due mandatory work.\n    if (aOverdue !== bOverdue) {\n      return aOverdue ? -1 : 1;\n    }\n\n    // For overdue work, allow importance to influence the\n    // ordering rather than simply making the oldest mistake\n    // permanently dominate.\n    if (aOverdue && bOverdue) {\n      if (a.score !== b.score) {\n        return b.score - a.score;\n      }\n\n      return (\n        (a.remainingDays ?? 0) -\n        (b.remainingDays ?? 0)\n      );\n    }\n\n    // For upcoming mandatory work, nearest due date first.\n    const aRemaining =\n      a.remainingDays ?? 999999;\n\n    const bRemaining =\n      b.remainingDays ?? 999999;\n\n    if (aRemaining !== bRemaining) {\n      return aRemaining - bRemaining;\n    }\n\n    return compareFocus(a, b);\n  };\n\n  // ----------------------------------------------------------\n  // Reasons shown in the Google projection.\n  // ----------------------------------------------------------\n\n  const mandatoryReason = (item) => {\n    if (item.dateConflict) {\n      return (\n        `Date conflict: starts ${item.startDate} ` +\n        `after due date ${item.dueDate}`\n      );\n    }\n\n    if (\n      item.remainingDays !== null &&\n      item.remainingDays < 0\n    ) {\n      const days =\n        Math.abs(item.remainingDays);\n\n      return (\n        `Overdue by ${days} ` +\n        `${days === 1 ? \"day\" : \"days\"}`\n      );\n    }\n\n    if (item.remainingDays === 0) {\n      return \"Due today\";\n    }\n\n    if (item.classTask) {\n      return (\n        `Class task due in ` +\n        `${item.remainingDays} days`\n      );\n    }\n\n    return (\n      `Due in ${item.remainingDays} days`\n    );\n  };\n\n  const focusReason = (item) => {\n    const reasons = [];\n\n    if (item.priorityBand === \"high\") {\n      reasons.push(\"High priority\");\n    }\n\n    if (item.classTask) {\n      reasons.push(\"Class work\");\n    }\n\n    if (\n      item.remainingDays !== null &&\n      item.remainingDays >= 0 &&\n      item.remainingDays <= 30\n    ) {\n      reasons.push(\n        `Due in ${item.remainingDays} days`\n      );\n    }\n\n    if (\n      item.windowProgress !== null &&\n      item.windowProgress >= 25\n    ) {\n      reasons.push(\n        `${item.windowProgress}% of work window elapsed`\n      );\n    }\n\n    if (\n      item.ageDays !== null &&\n      item.ageDays >= 14\n    ) {\n      reasons.push(\n        `Waiting ${item.ageDays} days`\n      );\n    }\n\n    if (reasons.length === 0) {\n      return \"Highest-ranked available task\";\n    }\n\n    return reasons.join(\"; \");\n  };\n\n  const compactTask = (\n    item,\n    role,\n    reason\n  ) => ({\n    role,\n\n    title: item.title,\n    reason,\n\n    source:\n      item.task.source ?? null,\n\n    sourceList:\n      item.task.list ?? null,\n\n    uid:\n      item.task.uid ?? null,\n\n    rawPriority:\n      item.rawPriority,\n\n    priorityBand:\n      item.priorityBand,\n\n    score:\n      item.score,\n\n    scoreBreakdown:\n      item.scoreBreakdown,\n\n    startDate:\n      item.startDate,\n\n    dueDate:\n      item.dueDate,\n\n    remainingDays:\n      item.remainingDays,\n\n    ageDays:\n      item.ageDays,\n\n    state:\n      item.task.planning?.state ??\n      null,\n\n    windowProgress:\n      item.windowProgress,\n\n    dateConflict:\n      item.dateConflict,\n  });\n\n  // ----------------------------------------------------------\n  // 1. All hard-mandatory work\n  // ----------------------------------------------------------\n\n  const mandatoryItems =\n    enriched\n      .filter(\n        (item) =>\n          item.mandatory\n      )\n      .sort(compareMandatory);\n\n  const selectedKeys =\n    new Set(\n      mandatoryItems.map(\n        (item) => item.key\n      )\n    );\n\n  const selectedFocus = [];\n\n  // ----------------------------------------------------------\n  // 2. High-priority Classes receive early attention\n  //\n  // They do not make an already-overloaded mandatory day\n  // longer. They are guaranteed consideration while there is\n  // room in the normal six-task working set.\n  // ----------------------------------------------------------\n\n  if (\n    mandatoryItems.length <\n    TARGET_ACTIONABLE\n  ) {\n    const earlyCandidates =\n      enriched\n        .filter(\n          (item) =>\n            item.earlyAttention &&\n            !selectedKeys.has(\n              item.key\n            )\n        )\n        .sort(compareFocus);\n\n    for (const item of earlyCandidates) {\n      if (\n        mandatoryItems.length +\n          selectedFocus.length >=\n        TARGET_ACTIONABLE\n      ) {\n        break;\n      }\n\n      selectedKeys.add(item.key);\n\n      selectedFocus.push({\n        item,\n        role: \"early_attention\",\n        reason:\n          `High-priority class work due in ` +\n          `${item.remainingDays} days`,\n      });\n    }\n  }\n\n  // ----------------------------------------------------------\n  // 3. Fill remaining ordinary capacity by score\n  // ----------------------------------------------------------\n\n  if (\n    mandatoryItems.length +\n      selectedFocus.length <\n    TARGET_ACTIONABLE\n  ) {\n    const rankedCandidates =\n      enriched\n        .filter(\n          (item) =>\n            !item.futureStart &&\n            !item.mandatory &&\n            !selectedKeys.has(\n              item.key\n            )\n        )\n        .sort(compareFocus);\n\n    for (\n      const item of rankedCandidates\n    ) {\n      if (\n        mandatoryItems.length +\n          selectedFocus.length >=\n        TARGET_ACTIONABLE\n      ) {\n        break;\n      }\n\n      selectedKeys.add(item.key);\n\n      selectedFocus.push({\n        item,\n        role: \"focus\",\n        reason:\n          focusReason(item),\n      });\n    }\n  }\n\n  // Keep all non-mandatory selected work in actual score order.\n  selectedFocus.sort(\n    (a, b) =>\n      compareFocus(\n        a.item,\n        b.item\n      )\n  );\n\n  const plan = [];\n\n  for (const item of mandatoryItems) {\n    plan.push(\n      compactTask(\n        item,\n        \"must_address\",\n        mandatoryReason(item)\n      )\n    );\n  }\n\n  for (\n    const selection of\n      selectedFocus\n  ) {\n    plan.push(\n      compactTask(\n        selection.item,\n        selection.role,\n        selection.reason\n      )\n    );\n  }\n\n  // ----------------------------------------------------------\n  // 4. One rotating stale review item\n  //\n  // Only undated, unselected tasks aged 30+ days.\n  // It stays stable for the entire calendar day, then rotates.\n  //\n  // We skip it when the actual mandatory workload is already\n  // six or more tasks, and never push the normal list above 7.\n  // ----------------------------------------------------------\n\n  let reviewSelection = null;\n\n  if (\n    mandatoryItems.length <\n      TARGET_ACTIONABLE &&\n    plan.length < 7\n  ) {\n    const reviewCandidates =\n      enriched\n        .filter(\n          (item) =>\n            !item.futureStart &&\n            !selectedKeys.has(\n              item.key\n            ) &&\n            !item.dueDate &&\n            item.ageDays !== null &&\n            item.ageDays >=\n              STALE_REVIEW_DAYS\n        )\n        .sort(\n          (a, b) =>\n            a.key.localeCompare(\n              b.key\n            )\n        );\n\n    if (\n      reviewCandidates.length > 0\n    ) {\n      const dayNumber =\n        Math.floor(\n          dateKeyToMs(\n            planningDate\n          ) / DAY_MS\n        );\n\n      const index =\n        dayNumber %\n        reviewCandidates.length;\n\n      reviewSelection =\n        reviewCandidates[index];\n\n      const age =\n        reviewSelection.ageDays;\n\n      plan.push(\n        compactTask(\n          reviewSelection,\n          \"backlog_review\",\n          `Stale for ${age} days; review whether to do, reprioritize, defer, break down, or remove`\n        )\n      );\n    }\n  }\n\n  // ----------------------------------------------------------\n  // Add final display rank.\n  // ----------------------------------------------------------\n\n  const candidateToday =\n    plan.map(\n      (item, index) => ({\n        ...item,\n        rank: index + 1,\n      })\n    );\n\n  const roleCounts =\n    candidateToday.reduce(\n      (counts, item) => {\n        counts[item.role] =\n          (counts[item.role] ?? 0) +\n          1;\n\n        return counts;\n      },\n      {}\n    );\n\n  // ----------------------------------------------------------\n  // Diagnostics\n  //\n  // This intentionally explains why every normalized task\n  // did or did not compete for today's list.\n  // ----------------------------------------------------------\n\n  const rankingDiagnostics =\n    [...enriched]\n      .sort((a, b) => {\n        if (\n          a.futureStart !==\n          b.futureStart\n        ) {\n          return a.futureStart\n            ? 1\n            : -1;\n        }\n\n        if (\n          a.mandatory !==\n          b.mandatory\n        ) {\n          return a.mandatory\n            ? -1\n            : 1;\n        }\n\n        return compareFocus(a, b);\n      })\n      .map((item) => ({\n        title: item.title,\n\n        list:\n          item.task.list ?? null,\n\n        selected:\n          selectedKeys.has(\n            item.key\n          ) ||\n          (\n            reviewSelection?.key ===\n            item.key\n          ),\n\n        futureStart:\n          item.futureStart,\n\n        mandatory:\n          item.mandatory,\n\n        earlyAttention:\n          item.earlyAttention,\n\n        dateConflict:\n          item.dateConflict,\n\n        rawPriority:\n          item.rawPriority,\n\n        priorityBand:\n          item.priorityBand,\n\n        score:\n          item.score,\n\n        scoreBreakdown:\n          item.scoreBreakdown,\n\n        createdDate:\n          item.createdDate,\n\n        startDate:\n          item.startDate,\n\n        dueDate:\n          item.dueDate,\n\n        remainingDays:\n          item.remainingDays,\n\n        ageDays:\n          item.ageDays,\n\n        windowProgress:\n          item.windowProgress,\n\n        excludedReason:\n          item.futureStart\n            ? `Do not surface before ${item.startDate}`\n            : null,\n      }));\n\n  return {\n    planningDate,\n\n    policy: {\n      targetActionable:\n        TARGET_ACTIONABLE,\n\n      generalMandatoryCalendarDates:\n        GENERAL_MANDATORY_DAYS + 1,\n\n      classMandatoryCalendarDates:\n        CLASS_MANDATORY_DAYS + 1,\n\n      highPriorityClassEarlyDays:\n        HIGH_CLASS_EARLY_DAYS,\n\n      staleReviewDays:\n        STALE_REVIEW_DAYS,\n    },\n\n    availableInputs: {\n      total: tasks.length,\n\n      future:\n        enriched.filter(\n          (item) =>\n            item.futureStart\n        ).length,\n\n      mandatory:\n        mandatoryItems.length,\n\n      earlyAttentionEligible:\n        enriched.filter(\n          (item) =>\n            item.earlyAttention\n        ).length,\n    },\n\n    candidateCount:\n      candidateToday.length,\n\n    roleCounts,\n\n    candidateToday,\n\n    rankingDiagnostics,\n  };\n};",
+                    "packageJson": "{}"
+                  },
+                  "errorHandlingOptions": {
+                    "retryOnFailure": {
+                      "value": false
+                    },
+                    "continueOnFailure": {
+                      "value": false
+                    }
+                  }
+                },
+                "nextAction": {
+                  "name": "step_6",
+                  "skip": false,
+                  "type": "CODE",
+                  "valid": true,
+                  "settings": {
+                    "input": {
+                      "planningDate": "{{step_4['output']['planningDate']}}",
+                      "candidateToday": "{{step_4['output']['candidateToday']}}"
+                    },
+                    "sampleData": {},
+                    "sourceCode": {
+                      "code": "export const code = async (inputs) => {\n  const candidateToday =\n    Array.isArray(\n      inputs.candidateToday\n    )\n      ? inputs.candidateToday\n      : [];\n\n  const formatDateKey = (value) => {\n    const text =\n      String(value ?? \"\");\n\n    if (\n      !/^\\d{8}$/.test(text)\n    ) {\n      return null;\n    }\n\n    return [\n      text.slice(0, 4),\n      text.slice(4, 6),\n      text.slice(6, 8),\n    ].join(\"-\");\n  };\n\n  const roleLabel = (role) => {\n    const labels = {\n      must_address:\n        \"Must Address\",\n\n      early_attention:\n        \"Early Attention\",\n\n      focus:\n        \"Focus\",\n\n      backlog_review:\n        \"Backlog Review\",\n    };\n\n    return (\n      labels[role] ??\n      role ??\n      \"Unknown\"\n    );\n  };\n\n  const priorityLabel = (\n    priority\n  ) => {\n    const labels = {\n      high: \"High\",\n      normal: \"Normal\",\n      low: \"Low\",\n      unspecified:\n        \"Unspecified\",\n    };\n\n    return (\n      labels[priority] ??\n      priority ??\n      \"Unspecified\"\n    );\n  };\n\n  const makeTitle = (task) => {\n    if (\n      task.role ===\n      \"backlog_review\"\n    ) {\n      return (\n        `Review: ${task.title}`\n      );\n    }\n\n    return task.title;\n  };\n\n  const projectionDate =\n    formatDateKey(\n      inputs.planningDate\n    );\n\n  if (!projectionDate) {\n    throw new Error(\n      `Invalid planning date: ${inputs.planningDate}`\n    );\n  }\n\n  const projectedTasks =\n    candidateToday.map(\n      (task) => {\n        const canonicalDue =\n          formatDateKey(\n            task.dueDate\n          );\n\n        const notes = [\n          \"Kestrel daily projection\",\n          \"\",\n          `Rank: ${task.rank}`,\n          `Role: ${roleLabel(task.role)}`,\n          `Source: Nextcloud / ${task.sourceList}`,\n          `Priority: ${priorityLabel(task.priorityBand)}`,\n          `Reason: ${task.reason}`,\n        ];\n\n        if (\n          task.score !== null &&\n          task.score !== undefined\n        ) {\n          notes.push(\n            `Kestrel score: ${task.score}`\n          );\n        }\n\n        if (task.startDate) {\n          notes.push(\n            `Canonical start: ${formatDateKey(task.startDate)}`\n          );\n        }\n\n        if (canonicalDue) {\n          notes.push(\n            `Canonical due: ${canonicalDue}`\n          );\n        }\n\n        if (\n          task.windowProgress !==\n            null &&\n          task.windowProgress !==\n            undefined\n        ) {\n          notes.push(\n            `Work window elapsed: ${task.windowProgress}%`\n          );\n        }\n\n        if (\n          task.ageDays !== null &&\n          task.ageDays !== undefined\n        ) {\n          notes.push(\n            `Task age: ${task.ageDays} days`\n          );\n        }\n\n        if (task.uid) {\n          notes.push(\n            \"\",\n            `Kestrel source UID: ${task.uid}`\n          );\n        }\n\n        notes.push(\n          \"Canonical task remains in Nextcloud.\"\n        );\n\n        return {\n          title:\n            makeTitle(task),\n\n          notes:\n            notes.join(\"\\n\"),\n\n          due:\n            canonicalDue,\n\n          completed:\n            false,\n\n          rank:\n            task.rank,\n\n          source: {\n            uid:\n              task.uid,\n\n            list:\n              task.sourceList,\n\n            role:\n              task.role,\n\n            score:\n              task.score,\n          },\n        };\n      }\n    );\n\n  return {\n    planningDate:\n      projectionDate,\n\n    count:\n      projectedTasks.length,\n\n    projectedTasks,\n  };\n};",
+                      "packageJson": "{}"
+                    },
+                    "errorHandlingOptions": {
+                      "retryOnFailure": {
+                        "value": false
+                      },
+                      "continueOnFailure": {
+                        "value": false
+                      }
+                    }
+                  },
+                  "nextAction": {
+                    "name": "step_5",
+                    "skip": false,
+                    "type": "PIECE",
+                    "valid": true,
+                    "settings": {
+                      "input": {
+                        "url": {
+                          "url": "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
+                        },
+                        "auth": "",
+                        "body": {},
+                        "method": "GET",
+                        "headers": {},
+                        "failsafe": false,
+                        "body_type": "none",
+                        "queryParams": {
+                          "maxResults": "100"
+                        },
+                        "followRedirects": false,
+                        "response_is_binary": false
+                      },
+                      "pieceName": "@activepieces/piece-google-tasks",
+                      "actionName": "custom_api_call",
+                      "sampleData": {},
+                      "pieceVersion": "0.5.3",
+                      "propertySettings": {
+                        "url": {
+                          "type": "MANUAL",
+                          "schema": {
+                            "url": {
+                              "type": "SHORT_TEXT",
+                              "required": true,
+                              "description": "You can either use the full URL or the relative path to the base URL\ni.e https://tasks.googleapis.com/resource or /resource",
+                              "displayName": "URL",
+                              "defaultValue": "https://tasks.googleapis.com"
+                            }
+                          }
+                        },
+                        "body": {
+                          "type": "MANUAL",
+                          "schema": {}
+                        },
+                        "method": {
+                          "type": "MANUAL"
+                        },
+                        "headers": {
+                          "type": "MANUAL"
+                        },
+                        "timeout": {
+                          "type": "MANUAL"
+                        },
+                        "failsafe": {
+                          "type": "MANUAL"
+                        },
+                        "body_type": {
+                          "type": "MANUAL"
+                        },
+                        "queryParams": {
+                          "type": "MANUAL"
+                        },
+                        "followRedirects": {
+                          "type": "MANUAL"
+                        },
+                        "response_is_binary": {
+                          "type": "MANUAL"
+                        }
+                      },
+                      "errorHandlingOptions": {
+                        "retryOnFailure": {
+                          "value": false
+                        },
+                        "continueOnFailure": {
+                          "value": false
+                        }
+                      }
+                    },
+                    "nextAction": {
+                      "name": "step_21",
+                      "skip": false,
+                      "type": "CODE",
+                      "valid": true,
+                      "settings": {
+                        "input": {
+                          "taskLists": "{{step_5['output']['body']['items']}}"
+                        },
+                        "sampleData": {},
+                        "sourceCode": {
+                          "code": "export const code = async (inputs) => {\n  const taskLists = Array.isArray(inputs.taskLists)\n    ? inputs.taskLists\n    : [];\n\n  const REQUIRED_LIST_NAME = \"Kestrel Today\";\n\n  const matches = taskLists.filter(\n    (list) =>\n      String(list?.title ?? \"\").trim() ===\n      REQUIRED_LIST_NAME\n  );\n\n  if (matches.length === 0) {\n    throw new Error(\n      `Google Tasks list \"${REQUIRED_LIST_NAME}\" was not found. ` +\n      `Create a list with that exact name and run the flow again.`\n    );\n  }\n\n  if (matches.length > 1) {\n    throw new Error(\n      `Found ${matches.length} Google Tasks lists named ` +\n      `\"${REQUIRED_LIST_NAME}\". Kestrel requires exactly one.`\n    );\n  }\n\n  const list = matches[0];\n\n  if (!list.id) {\n    throw new Error(\n      `\"${REQUIRED_LIST_NAME}\" does not have a Google Tasks list ID.`\n    );\n  }\n\n  return {\n    listName: REQUIRED_LIST_NAME,\n    listId: list.id,\n  };\n};",
+                          "packageJson": "{}"
+                        },
+                        "errorHandlingOptions": {
+                          "retryOnFailure": {
+                            "value": false
+                          },
+                          "continueOnFailure": {
+                            "value": false
+                          }
+                        }
+                      },
+                      "nextAction": {
+                        "name": "step_8",
+                        "skip": false,
+                        "type": "PIECE",
+                        "valid": true,
+                        "settings": {
+                          "input": {
+                            "url": {
+                              "url": "https://tasks.googleapis.com/tasks/v1/lists/{{step_21['output']['listId']}}/tasks"
+                            },
+                            "auth": "",
+                            "body": {},
+                            "method": "GET",
+                            "headers": {},
+                            "failsafe": false,
+                            "body_type": "none",
+                            "queryParams": {
+                              "maxResults": "100",
+                              "showHidden": "true",
+                              "showCompleted": "true"
+                            },
+                            "followRedirects": false,
+                            "response_is_binary": false
+                          },
+                          "pieceName": "@activepieces/piece-google-tasks",
+                          "actionName": "custom_api_call",
+                          "sampleData": {},
+                          "pieceVersion": "0.5.3",
+                          "propertySettings": {
+                            "url": {
+                              "type": "MANUAL",
+                              "schema": {
+                                "url": {
+                                  "type": "SHORT_TEXT",
+                                  "required": true,
+                                  "description": "You can either use the full URL or the relative path to the base URL\ni.e https://tasks.googleapis.com/resource or /resource",
+                                  "displayName": "URL",
+                                  "defaultValue": "https://tasks.googleapis.com"
+                                }
+                              }
+                            },
+                            "body": {
+                              "type": "MANUAL",
+                              "schema": {}
+                            },
+                            "method": {
+                              "type": "MANUAL"
+                            },
+                            "headers": {
+                              "type": "MANUAL"
+                            },
+                            "timeout": {
+                              "type": "MANUAL"
+                            },
+                            "failsafe": {
+                              "type": "MANUAL"
+                            },
+                            "body_type": {
+                              "type": "MANUAL"
+                            },
+                            "queryParams": {
+                              "type": "MANUAL"
+                            },
+                            "followRedirects": {
+                              "type": "MANUAL"
+                            },
+                            "response_is_binary": {
+                              "type": "MANUAL"
+                            }
+                          },
+                          "errorHandlingOptions": {
+                            "retryOnFailure": {
+                              "value": false
+                            },
+                            "continueOnFailure": {
+                              "value": false
+                            }
+                          }
+                        },
+                        "nextAction": {
+                          "name": "step_9",
+                          "skip": false,
+                          "type": "CODE",
+                          "valid": true,
+                          "settings": {
+                            "input": {
+                              "timezone": "{{variables['KESTREL_TIMEZONE']}}",
+                              "planningDate": "{{step_6['output']['planningDate']}}",
+                              "existingTasks": "{{step_8['output']['body']['items']}}",
+                              "projectedTasks": "{{step_6['output']['projectedTasks']}}"
+                            },
+                            "sampleData": {},
+                            "sourceCode": {
+                              "code": "export const code = async (inputs) => {\n  const projectedTasks = Array.isArray(inputs.projectedTasks)\n    ? inputs.projectedTasks\n    : [];\n\n  const existingTasks = Array.isArray(inputs.existingTasks)\n    ? inputs.existingTasks\n    : [];\n\n  const planningDate =\n    inputs.planningDate ?? null;\n\n  const LOCAL_TIME_ZONE =\n    String(inputs.timezone ?? \"\").trim();\n\n  const MANAGED_MARKER =\n    \"Kestrel daily projection\";\n\n  const UID_PREFIX =\n    \"Kestrel source UID:\";\n\n  // ----------------------------------------------------------\n  // Validate configuration\n  // ----------------------------------------------------------\n\n  if (!LOCAL_TIME_ZONE) {\n    throw new Error(\n      \"Kestrel timezone is missing\"\n    );\n  }\n\n  try {\n    new Intl.DateTimeFormat(\n      \"en-US\",\n      {\n        timeZone: LOCAL_TIME_ZONE,\n      }\n    ).format(new Date());\n  } catch {\n    throw new Error(\n      `Invalid Kestrel timezone: ${LOCAL_TIME_ZONE}`\n    );\n  }\n\n  // ----------------------------------------------------------\n  // Date helpers\n  // ----------------------------------------------------------\n\n  const normalizeDate = (value) => {\n    if (!value) {\n      return null;\n    }\n\n    const text =\n      String(value);\n\n    // Accept:\n    //   YYYY-MM-DD\n    //   YYYY-MM-DDTHH:mm:ss...\n    const match =\n      text.match(\n        /^(\\d{4}-\\d{2}-\\d{2})/\n      );\n\n    return match\n      ? match[1]\n      : null;\n  };\n\n  const dateInTimeZone = (\n    value,\n    timeZone\n  ) => {\n    if (!value) {\n      return null;\n    }\n\n    const date =\n      new Date(value);\n\n    if (\n      Number.isNaN(\n        date.getTime()\n      )\n    ) {\n      return null;\n    }\n\n    const parts =\n      new Intl.DateTimeFormat(\n        \"en-US\",\n        {\n          timeZone,\n          year: \"numeric\",\n          month: \"2-digit\",\n          day: \"2-digit\",\n        }\n      ).formatToParts(date);\n\n    const values = {};\n\n    for (const part of parts) {\n      if (\n        part.type === \"year\" ||\n        part.type === \"month\" ||\n        part.type === \"day\"\n      ) {\n        values[part.type] =\n          part.value;\n      }\n    }\n\n    if (\n      !values.year ||\n      !values.month ||\n      !values.day\n    ) {\n      return null;\n    }\n\n    return [\n      values.year,\n      values.month,\n      values.day,\n    ].join(\"-\");\n  };\n\n  const normalizedPlanningDate =\n    normalizeDate(\n      planningDate\n    );\n\n  if (!normalizedPlanningDate) {\n    throw new Error(\n      `Invalid planning date: ${planningDate}`\n    );\n  }\n\n  // ----------------------------------------------------------\n  // Managed-task helpers\n  // ----------------------------------------------------------\n\n  const isManaged = (task) =>\n    String(\n      task?.notes ?? \"\"\n    ).includes(\n      MANAGED_MARKER\n    );\n\n  const extractSourceUid = (\n    task\n  ) => {\n    const notes =\n      String(\n        task?.notes ?? \"\"\n      );\n\n    if (\n      !notes.includes(\n        MANAGED_MARKER\n      )\n    ) {\n      return null;\n    }\n\n    const lines =\n      notes.split(/\\r?\\n/);\n\n    for (const line of lines) {\n      if (\n        line.startsWith(\n          UID_PREFIX\n        )\n      ) {\n        return line\n          .slice(\n            UID_PREFIX.length\n          )\n          .trim();\n      }\n    }\n\n    return null;\n  };\n\n  // ----------------------------------------------------------\n  // Build desired projection map\n  // ----------------------------------------------------------\n\n  const desiredByUid =\n    new Map();\n\n  for (\n    const task\n    of projectedTasks\n  ) {\n    const uid =\n      task?.source?.uid;\n\n    if (!uid) {\n      continue;\n    }\n\n    desiredByUid.set(\n      uid,\n      task\n    );\n  }\n\n  // ----------------------------------------------------------\n  // Separate managed and unmanaged Google tasks\n  // ----------------------------------------------------------\n\n  const existingManaged =\n    existingTasks.filter(\n      isManaged\n    );\n\n  const existingUnmanaged =\n    existingTasks.filter(\n      (task) =>\n        !isManaged(task)\n    );\n\n  const existingByUid =\n    new Map();\n\n  for (\n    const task\n    of existingManaged\n  ) {\n    const uid =\n      extractSourceUid(task);\n\n    if (!uid) {\n      continue;\n    }\n\n    if (\n      !existingByUid.has(uid)\n    ) {\n      existingByUid.set(\n        uid,\n        []\n      );\n    }\n\n    existingByUid\n      .get(uid)\n      .push(task);\n  }\n\n  // ----------------------------------------------------------\n  // Reconciliation buckets\n  // ----------------------------------------------------------\n\n  const toCreate = [];\n  const toUpdate = [];\n  const toDelete = [];\n  const unchanged = [];\n  const completedToday = [];\n\n  const handledExistingIds =\n    new Set();\n\n  // ----------------------------------------------------------\n  // Reconcile every desired projection\n  // ----------------------------------------------------------\n\n  for (\n    const [uid, desired]\n    of desiredByUid.entries()\n  ) {\n    const matches =\n      existingByUid.get(uid)\n      ?? [];\n\n    const activeMatches =\n      matches.filter(\n        (task) =>\n          task.status !==\n          \"completed\"\n      );\n\n    const completedMatches =\n      matches.filter(\n        (task) =>\n          task.status ===\n          \"completed\"\n      );\n\n    // --------------------------------------------------------\n    // Detect a projection completed today.\n    //\n    // Convert Google's completion timestamp into the same\n    // local timezone used by the planner.\n    // --------------------------------------------------------\n\n    const completedForToday =\n      completedMatches.find(\n        (task) => {\n          const completedDate =\n            dateInTimeZone(\n              task.completed,\n              LOCAL_TIME_ZONE\n            );\n\n          return (\n            completedDate ===\n            normalizedPlanningDate\n          );\n        }\n      ) ?? null;\n\n    if (completedForToday) {\n      handledExistingIds.add(\n        completedForToday.id\n      );\n\n      completedToday.push({\n        uid,\n\n        googleTaskId:\n          completedForToday.id,\n\n        title:\n          completedForToday.title,\n\n        completed:\n          completedForToday.completed,\n\n        reason:\n          \"Projected task was already completed in Google today\",\n      });\n\n      for (\n        const duplicate\n        of activeMatches\n      ) {\n        handledExistingIds.add(\n          duplicate.id\n        );\n\n        toDelete.push({\n          id:\n            duplicate.id,\n\n          uid,\n\n          title:\n            duplicate.title,\n\n          reason:\n            \"Active duplicate exists after task was completed today\",\n        });\n      }\n\n      continue;\n    }\n\n    // --------------------------------------------------------\n    // Missing projection\n    // --------------------------------------------------------\n\n    if (\n      activeMatches.length === 0\n    ) {\n      toCreate.push({\n        uid,\n\n        title:\n          desired.title,\n\n        notes:\n          desired.notes,\n\n        due:\n          desired.due ?? null,\n\n        completed:\n          false,\n\n        rank:\n          desired.rank ?? null,\n      });\n\n      continue;\n    }\n\n    // --------------------------------------------------------\n    // Existing projection\n    // --------------------------------------------------------\n\n    const current =\n      activeMatches[0];\n\n    handledExistingIds.add(\n      current.id\n    );\n\n    const currentDue =\n      normalizeDate(\n        current.due\n      );\n\n    const desiredDue =\n      normalizeDate(\n        desired.due\n      );\n\n    const titleChanged =\n      String(\n        current.title ?? \"\"\n      ) !==\n      String(\n        desired.title ?? \"\"\n      );\n\n    const notesChanged =\n      String(\n        current.notes ?? \"\"\n      ) !==\n      String(\n        desired.notes ?? \"\"\n      );\n\n    const dueChanged =\n      currentDue !==\n      desiredDue;\n\n    if (\n      titleChanged ||\n      notesChanged ||\n      dueChanged\n    ) {\n      toUpdate.push({\n        id:\n          current.id,\n\n        uid,\n\n        title:\n          desired.title,\n\n        notes:\n          desired.notes,\n\n        due:\n          desired.due ?? null,\n\n        rank:\n          desired.rank ?? null,\n\n        changes: {\n          title:\n            titleChanged,\n\n          notes:\n            notesChanged,\n\n          due:\n            dueChanged,\n        },\n\n        previous: {\n          title:\n            current.title\n            ?? null,\n\n          due:\n            currentDue,\n        },\n\n        desired: {\n          title:\n            desired.title\n            ?? null,\n\n          due:\n            desiredDue,\n        },\n      });\n    } else {\n      unchanged.push({\n        id:\n          current.id,\n\n        uid,\n\n        title:\n          current.title,\n\n        due:\n          currentDue,\n\n        rank:\n          desired.rank ?? null,\n      });\n    }\n\n    // --------------------------------------------------------\n    // Remove active duplicates\n    // --------------------------------------------------------\n\n    for (\n      const duplicate\n      of activeMatches.slice(1)\n    ) {\n      handledExistingIds.add(\n        duplicate.id\n      );\n\n      toDelete.push({\n        id:\n          duplicate.id,\n\n        uid,\n\n        title:\n          duplicate.title,\n\n        reason:\n          \"Duplicate active Kestrel projection\",\n      });\n    }\n  }\n\n  // ----------------------------------------------------------\n  // Remove managed projections no longer desired\n  // ----------------------------------------------------------\n\n  for (\n    const task\n    of existingManaged\n  ) {\n    if (\n      handledExistingIds.has(\n        task.id\n      )\n    ) {\n      continue;\n    }\n\n    const uid =\n      extractSourceUid(task);\n\n    if (!uid) {\n      continue;\n    }\n\n    // Historical completed projections are retained.\n    if (\n      task.status ===\n      \"completed\"\n    ) {\n      continue;\n    }\n\n    if (\n      !desiredByUid.has(uid)\n    ) {\n      toDelete.push({\n        id:\n          task.id,\n\n        uid,\n\n        title:\n          task.title,\n\n        reason:\n          \"No longer present in today's desired projection\",\n      });\n    }\n  }\n\n  // ----------------------------------------------------------\n  // Result\n  // ----------------------------------------------------------\n\n  return {\n    planningDate:\n      normalizedPlanningDate,\n\n    timezone:\n      LOCAL_TIME_ZONE,\n\n    counts: {\n      desired:\n        projectedTasks.length,\n\n      existingTotal:\n        existingTasks.length,\n\n      existingManaged:\n        existingManaged.length,\n\n      existingUnmanaged:\n        existingUnmanaged.length,\n\n      toCreate:\n        toCreate.length,\n\n      toUpdate:\n        toUpdate.length,\n\n      toDelete:\n        toDelete.length,\n\n      unchanged:\n        unchanged.length,\n\n      completedToday:\n        completedToday.length,\n    },\n\n    toCreate,\n    toUpdate,\n    toDelete,\n    unchanged,\n    completedToday,\n\n    ignoredUnmanaged:\n      existingUnmanaged.map(\n        (task) => ({\n          id:\n            task.id,\n\n          title:\n            task.title,\n        })\n      ),\n  };\n};",
+                              "packageJson": "{}"
+                            },
+                            "errorHandlingOptions": {
+                              "retryOnFailure": {
+                                "value": false
+                              },
+                              "continueOnFailure": {
+                                "value": false
+                              }
+                            }
+                          },
+                          "nextAction": {
+                            "name": "step_10",
+                            "skip": false,
+                            "type": "LOOP_ON_ITEMS",
+                            "valid": true,
+                            "settings": {
+                              "items": "{{step_9['output']['toCreate']}}",
+                              "sampleData": {}
+                            },
+                            "nextAction": {
+                              "name": "step_7",
+                              "skip": false,
+                              "type": "LOOP_ON_ITEMS",
+                              "valid": true,
+                              "settings": {
+                                "items": "{{step_9['output']['toUpdate']}}",
+                                "sampleData": {}
+                              },
+                              "nextAction": {
+                                "name": "step_14",
+                                "skip": false,
+                                "type": "LOOP_ON_ITEMS",
+                                "valid": true,
+                                "settings": {
+                                  "items": "{{step_9['output']['toDelete']}}",
+                                  "sampleData": {}
+                                },
+                                "nextAction": {
+                                  "name": "step_17",
+                                  "skip": false,
+                                  "type": "PIECE",
+                                  "valid": true,
+                                  "settings": {
+                                    "input": {
+                                      "url": {
+                                        "url": "https://tasks.googleapis.com/tasks/v1/lists/{{step_21['output']['listId']}}/tasks"
+                                      },
+                                      "auth": "",
+                                      "body": {},
+                                      "method": "GET",
+                                      "headers": {},
+                                      "failsafe": false,
+                                      "body_type": "none",
+                                      "queryParams": {
+                                        "maxResults": "100",
+                                        "showHidden": "true",
+                                        "showCompleted": "true"
+                                      },
+                                      "followRedirects": false,
+                                      "response_is_binary": false
+                                    },
+                                    "pieceName": "@activepieces/piece-google-tasks",
+                                    "actionName": "custom_api_call",
+                                    "sampleData": {},
+                                    "pieceVersion": "0.5.3",
+                                    "propertySettings": {
+                                      "url": {
+                                        "type": "MANUAL",
+                                        "schema": {
+                                          "url": {
+                                            "type": "SHORT_TEXT",
+                                            "required": true,
+                                            "description": "You can either use the full URL or the relative path to the base URL\ni.e https://tasks.googleapis.com/resource or /resource",
+                                            "displayName": "URL",
+                                            "defaultValue": "https://tasks.googleapis.com"
+                                          }
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "MANUAL",
+                                        "schema": {}
+                                      },
+                                      "method": {
+                                        "type": "MANUAL"
+                                      },
+                                      "headers": {
+                                        "type": "MANUAL"
+                                      },
+                                      "timeout": {
+                                        "type": "MANUAL"
+                                      },
+                                      "failsafe": {
+                                        "type": "MANUAL"
+                                      },
+                                      "body_type": {
+                                        "type": "MANUAL"
+                                      },
+                                      "queryParams": {
+                                        "type": "MANUAL"
+                                      },
+                                      "followRedirects": {
+                                        "type": "MANUAL"
+                                      },
+                                      "response_is_binary": {
+                                        "type": "MANUAL"
+                                      }
+                                    },
+                                    "errorHandlingOptions": {
+                                      "retryOnFailure": {
+                                        "value": false
+                                      },
+                                      "continueOnFailure": {
+                                        "value": false
+                                      }
+                                    }
+                                  },
+                                  "nextAction": {
+                                    "name": "step_18",
+                                    "skip": false,
+                                    "type": "CODE",
+                                    "valid": true,
+                                    "settings": {
+                                      "input": {
+                                        "existingTasks": "{{step_17['output']['body']['items']}}",
+                                        "projectedTasks": "{{step_6['output']['projectedTasks']}}"
+                                      },
+                                      "sampleData": {},
+                                      "sourceCode": {
+                                        "code": "export const code = async (inputs) => {\n  const projectedTasks = Array.isArray(inputs.projectedTasks)\n    ? inputs.projectedTasks\n    : [];\n\n  const existingTasks = Array.isArray(inputs.existingTasks)\n    ? inputs.existingTasks\n    : [];\n\n  const MANAGED_MARKER = \"Kestrel daily projection\";\n  const UID_PREFIX = \"Kestrel source UID:\";\n\n  // ----------------------------------------------------------\n  // Helpers\n  // ----------------------------------------------------------\n\n  const isManaged = (task) =>\n    String(task?.notes ?? \"\").includes(\n      MANAGED_MARKER\n    );\n\n  const extractSourceUid = (task) => {\n    const notes = String(task?.notes ?? \"\");\n\n    if (!notes.includes(MANAGED_MARKER)) {\n      return null;\n    }\n\n    const lines = notes.split(/\\r?\\n/);\n\n    for (const line of lines) {\n      if (line.startsWith(UID_PREFIX)) {\n        return line\n          .slice(UID_PREFIX.length)\n          .trim();\n      }\n    }\n\n    return null;\n  };\n\n  const comparePosition = (a, b) =>\n    String(a.position ?? \"\").localeCompare(\n      String(b.position ?? \"\")\n    );\n\n  // ----------------------------------------------------------\n  // Desired Kestrel order\n  // ----------------------------------------------------------\n\n  const desired = [...projectedTasks]\n    .filter(\n      (task) =>\n        task?.source?.uid\n    )\n    .sort((a, b) => {\n      const aRank =\n        Number(a.rank ?? 999999);\n\n      const bRank =\n        Number(b.rank ?? 999999);\n\n      return aRank - bRank;\n    });\n\n  // ----------------------------------------------------------\n  // Current active Google task order\n  // ----------------------------------------------------------\n\n  const activeTasks = existingTasks\n    .filter(\n      (task) =>\n        task?.status !== \"completed\" &&\n        !task?.deleted\n    )\n    .sort(comparePosition);\n\n  const activeManaged =\n    activeTasks.filter(isManaged);\n\n  // ----------------------------------------------------------\n  // Match Nextcloud source UIDs to Google task IDs\n  // ----------------------------------------------------------\n\n  const existingByUid = new Map();\n\n  for (const task of activeManaged) {\n    const uid =\n      extractSourceUid(task);\n\n    if (!uid) {\n      continue;\n    }\n\n    // Reconciliation should already guarantee one active\n    // managed Google task per source UID.\n    if (!existingByUid.has(uid)) {\n      existingByUid.set(\n        uid,\n        task\n      );\n    }\n  }\n\n  const resolved = [];\n  const missing = [];\n\n  for (const desiredTask of desired) {\n    const uid =\n      desiredTask.source.uid;\n\n    const existing =\n      existingByUid.get(uid);\n\n    if (!existing) {\n      missing.push({\n        uid,\n\n        title:\n          desiredTask.title ?? null,\n\n        rank:\n          desiredTask.rank ?? null,\n      });\n\n      continue;\n    }\n\n    resolved.push({\n      id:\n        existing.id,\n\n      uid,\n\n      title:\n        existing.title,\n\n      rank:\n        desiredTask.rank ?? null,\n\n      position:\n        existing.position ?? null,\n    });\n  }\n\n  // ----------------------------------------------------------\n  // Safety: do not partially reorder an incomplete projection\n  // ----------------------------------------------------------\n\n  if (missing.length > 0) {\n    return {\n      canReorder: false,\n\n      reason:\n        \"One or more desired projections could not be matched to an active Google task\",\n\n      desiredCount:\n        desired.length,\n\n      resolvedCount:\n        resolved.length,\n\n      missing,\n\n      orderAlreadyCorrect:\n        false,\n\n      toMove: [],\n    };\n  }\n\n  // ----------------------------------------------------------\n  // Safety: Google task IDs must be unique\n  // ----------------------------------------------------------\n\n  const idCounts = {};\n\n  for (const task of resolved) {\n    idCounts[task.id] =\n      (idCounts[task.id] ?? 0) + 1;\n  }\n\n  const duplicateIds =\n    Object.entries(idCounts)\n      .filter(\n        ([, count]) =>\n          count > 1\n      )\n      .map(\n        ([id, count]) => ({\n          id,\n          count,\n        })\n      );\n\n  if (duplicateIds.length > 0) {\n    return {\n      canReorder: false,\n\n      reason:\n        \"Multiple desired projections resolved to the same Google task ID\",\n\n      duplicateIds,\n\n      desiredCount:\n        desired.length,\n\n      resolvedCount:\n        resolved.length,\n\n      orderAlreadyCorrect:\n        false,\n\n      toMove: [],\n    };\n  }\n\n  // ----------------------------------------------------------\n  // Determine whether the Kestrel-managed block is already\n  // correct at the top of the Google list.\n  // ----------------------------------------------------------\n\n  const desiredIds =\n    resolved.map(\n      (task) => task.id\n    );\n\n  const currentTopIds =\n    activeTasks\n      .slice(\n        0,\n        desiredIds.length\n      )\n      .map(\n        (task) => task.id\n      );\n\n  const orderAlreadyCorrect =\n    desiredIds.length ===\n      currentTopIds.length &&\n    desiredIds.every(\n      (id, index) =>\n        currentTopIds[index] === id\n    );\n\n  const currentOrder =\n    activeTasks.map(\n      (task, index) => ({\n        index:\n          index + 1,\n\n        id:\n          task.id,\n\n        title:\n          task.title,\n\n        managed:\n          isManaged(task),\n\n        sourceUid:\n          extractSourceUid(task),\n      })\n    );\n\n  if (orderAlreadyCorrect) {\n    return {\n      canReorder: true,\n\n      desiredCount:\n        desired.length,\n\n      activeTaskCount:\n        activeTasks.length,\n\n      orderAlreadyCorrect:\n        true,\n\n      currentOrder,\n\n      desiredOrder:\n        resolved,\n\n      toMove: [],\n    };\n  }\n\n  // ----------------------------------------------------------\n  // Build move sequence\n  //\n  // Google moves a task to the top when no \"previous\" task is\n  // supplied.\n  //\n  // Therefore process the desired list BACKWARDS:\n  //\n  // desired:\n  //   A, B, C, D\n  //\n  // operations:\n  //   D → top\n  //   C → top\n  //   B → top\n  //   A → top\n  //\n  // final:\n  //   A, B, C, D\n  //\n  // This avoids the previous-task relationship entirely.\n  // ----------------------------------------------------------\n\n  const toMove =\n    [...resolved]\n      .reverse()\n      .map((task) => ({\n        id:\n          task.id,\n\n        uid:\n          task.uid,\n\n        title:\n          task.title,\n\n        rank:\n          task.rank,\n      }));\n\n  return {\n    canReorder: true,\n\n    desiredCount:\n      desired.length,\n\n    activeTaskCount:\n      activeTasks.length,\n\n    orderAlreadyCorrect:\n      false,\n\n    currentOrder,\n\n    desiredOrder:\n      resolved,\n\n    toMove,\n  };\n};",
+                                        "packageJson": "{}"
+                                      },
+                                      "errorHandlingOptions": {
+                                        "retryOnFailure": {
+                                          "value": false
+                                        },
+                                        "continueOnFailure": {
+                                          "value": false
+                                        }
+                                      }
+                                    },
+                                    "nextAction": {
+                                      "name": "step_19",
+                                      "skip": false,
+                                      "type": "LOOP_ON_ITEMS",
+                                      "valid": true,
+                                      "settings": {
+                                        "items": "{{step_18['output']['toMove']}}",
+                                        "sampleData": {}
+                                      },
+                                      "displayName": "Apply Google Order",
+                                      "firstLoopAction": {
+                                        "name": "step_20",
+                                        "skip": false,
+                                        "type": "PIECE",
+                                        "valid": true,
+                                        "settings": {
+                                          "input": {
+                                            "url": {
+                                              "url": "https://tasks.googleapis.com/tasks/v1/lists/{{step_21['output']['listId']}}/tasks/{{step_19['output']['item']['id']}}/move"
+                                            },
+                                            "auth": "",
+                                            "body": {},
+                                            "method": "POST",
+                                            "headers": {},
+                                            "failsafe": false,
+                                            "body_type": "none",
+                                            "queryParams": {},
+                                            "followRedirects": false,
+                                            "response_is_binary": false
+                                          },
+                                          "pieceName": "@activepieces/piece-google-tasks",
+                                          "actionName": "custom_api_call",
+                                          "sampleData": {},
+                                          "pieceVersion": "0.5.3",
+                                          "propertySettings": {
+                                            "url": {
+                                              "type": "MANUAL",
+                                              "schema": {
+                                                "url": {
+                                                  "type": "SHORT_TEXT",
+                                                  "required": true,
+                                                  "description": "You can either use the full URL or the relative path to the base URL\ni.e https://tasks.googleapis.com/resource or /resource",
+                                                  "displayName": "URL",
+                                                  "defaultValue": "https://tasks.googleapis.com"
+                                                }
+                                              }
+                                            },
+                                            "body": {
+                                              "type": "MANUAL",
+                                              "schema": {}
+                                            },
+                                            "method": {
+                                              "type": "MANUAL"
+                                            },
+                                            "headers": {
+                                              "type": "MANUAL"
+                                            },
+                                            "timeout": {
+                                              "type": "MANUAL"
+                                            },
+                                            "failsafe": {
+                                              "type": "MANUAL"
+                                            },
+                                            "body_type": {
+                                              "type": "MANUAL"
+                                            },
+                                            "queryParams": {
+                                              "type": "MANUAL"
+                                            },
+                                            "followRedirects": {
+                                              "type": "MANUAL"
+                                            },
+                                            "response_is_binary": {
+                                              "type": "MANUAL"
+                                            }
+                                          },
+                                          "errorHandlingOptions": {
+                                            "retryOnFailure": {
+                                              "value": false
+                                            },
+                                            "continueOnFailure": {
+                                              "value": false
+                                            }
+                                          }
+                                        },
+                                        "displayName": "Move Projected Task",
+                                        "lastUpdatedDate": "2026-09-05T16:44:50.161Z"
+                                      },
+                                      "lastUpdatedDate": "2026-09-05T16:44:50.161Z"
+                                    },
+                                    "displayName": "Prepare Google Order",
+                                    "lastUpdatedDate": "2026-09-05T16:44:50.160Z"
+                                  },
+                                  "displayName": "Read Kestrel Today After Reconcile",
+                                  "lastUpdatedDate": "2026-09-05T16:44:50.159Z"
+                                },
+                                "displayName": "Delete Obsolete Projections",
+                                "firstLoopAction": {
+                                  "name": "step_15",
+                                  "skip": false,
+                                  "type": "PIECE",
+                                  "valid": true,
+                                  "settings": {
+                                    "input": {
+                                      "url": {
+                                        "url": "https://tasks.googleapis.com/tasks/v1/lists/{{step_21['output']['listId']}}/tasks/{{step_14['output']['item']['id']}}"
+                                      },
+                                      "auth": "",
+                                      "body": {},
+                                      "method": "DELETE",
+                                      "headers": {},
+                                      "failsafe": false,
+                                      "body_type": "none",
+                                      "queryParams": {},
+                                      "followRedirects": false,
+                                      "response_is_binary": false
+                                    },
+                                    "pieceName": "@activepieces/piece-google-tasks",
+                                    "actionName": "custom_api_call",
+                                    "sampleData": {},
+                                    "pieceVersion": "0.5.3",
+                                    "propertySettings": {
+                                      "url": {
+                                        "type": "MANUAL",
+                                        "schema": {
+                                          "url": {
+                                            "type": "SHORT_TEXT",
+                                            "required": true,
+                                            "description": "You can either use the full URL or the relative path to the base URL\ni.e https://tasks.googleapis.com/resource or /resource",
+                                            "displayName": "URL",
+                                            "defaultValue": "https://tasks.googleapis.com"
+                                          }
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "MANUAL",
+                                        "schema": {}
+                                      },
+                                      "method": {
+                                        "type": "MANUAL"
+                                      },
+                                      "headers": {
+                                        "type": "MANUAL"
+                                      },
+                                      "timeout": {
+                                        "type": "MANUAL"
+                                      },
+                                      "failsafe": {
+                                        "type": "MANUAL"
+                                      },
+                                      "body_type": {
+                                        "type": "MANUAL"
+                                      },
+                                      "queryParams": {
+                                        "type": "MANUAL"
+                                      },
+                                      "followRedirects": {
+                                        "type": "MANUAL"
+                                      },
+                                      "response_is_binary": {
+                                        "type": "MANUAL"
+                                      }
+                                    },
+                                    "errorHandlingOptions": {
+                                      "retryOnFailure": {
+                                        "value": false
+                                      },
+                                      "continueOnFailure": {
+                                        "value": false
+                                      }
+                                    }
+                                  },
+                                  "displayName": "Delete Projected Task",
+                                  "lastUpdatedDate": "2026-09-05T16:44:50.159Z"
+                                },
+                                "lastUpdatedDate": "2026-09-05T16:44:50.158Z"
+                              },
+                              "displayName": "Update Changed Projections",
+                              "firstLoopAction": {
+                                "name": "step_12",
+                                "skip": false,
+                                "type": "CODE",
+                                "valid": true,
+                                "settings": {
+                                  "input": {
+                                    "task": "{{step_7['output']['item']}}"
+                                  },
+                                  "sampleData": {},
+                                  "sourceCode": {
+                                    "code": "export const code = async (inputs) => {\n  const task = inputs.task;\n\n  if (!task?.id) {\n    throw new Error(\n      \"Google task ID is missing\"\n    );\n  }\n\n  if (!task?.title) {\n    throw new Error(\n      \"Projected task title is missing\"\n    );\n  }\n\n  return {\n    id: task.id,\n\n    body: {\n      title:\n        task.title,\n\n      notes:\n        task.notes ?? \"\",\n\n      due:\n        task.due\n          ? `${task.due}T00:00:00.000Z`\n          : null,\n    },\n  };\n};",
+                                    "packageJson": "{}"
+                                  },
+                                  "errorHandlingOptions": {
+                                    "retryOnFailure": {
+                                      "value": false
+                                    },
+                                    "continueOnFailure": {
+                                      "value": false
+                                    }
+                                  }
+                                },
+                                "nextAction": {
+                                  "name": "step_13",
+                                  "skip": false,
+                                  "type": "PIECE",
+                                  "valid": true,
+                                  "settings": {
+                                    "input": {
+                                      "url": {
+                                        "url": "https://tasks.googleapis.com/tasks/v1/lists/{{step_21['output']['listId']}}/tasks/{{step_12['output']['id']}}"
+                                      },
+                                      "auth": "",
+                                      "body": {
+                                        "data": "{{step_12['output']['body']}}"
+                                      },
+                                      "method": "PATCH",
+                                      "headers": {},
+                                      "failsafe": false,
+                                      "body_type": "json",
+                                      "queryParams": {},
+                                      "followRedirects": false,
+                                      "response_is_binary": false
+                                    },
+                                    "pieceName": "@activepieces/piece-google-tasks",
+                                    "actionName": "custom_api_call",
+                                    "sampleData": {},
+                                    "pieceVersion": "0.5.3",
+                                    "propertySettings": {
+                                      "url": {
+                                        "type": "MANUAL",
+                                        "schema": {
+                                          "url": {
+                                            "type": "SHORT_TEXT",
+                                            "required": true,
+                                            "description": "You can either use the full URL or the relative path to the base URL\ni.e https://tasks.googleapis.com/resource or /resource",
+                                            "displayName": "URL",
+                                            "defaultValue": "https://tasks.googleapis.com"
+                                          }
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "MANUAL",
+                                        "schema": {
+                                          "data": {
+                                            "type": "JSON",
+                                            "required": true,
+                                            "displayName": "JSON Body"
+                                          }
+                                        }
+                                      },
+                                      "method": {
+                                        "type": "MANUAL"
+                                      },
+                                      "headers": {
+                                        "type": "MANUAL"
+                                      },
+                                      "timeout": {
+                                        "type": "MANUAL"
+                                      },
+                                      "failsafe": {
+                                        "type": "MANUAL"
+                                      },
+                                      "body_type": {
+                                        "type": "MANUAL"
+                                      },
+                                      "queryParams": {
+                                        "type": "MANUAL"
+                                      },
+                                      "followRedirects": {
+                                        "type": "MANUAL"
+                                      },
+                                      "response_is_binary": {
+                                        "type": "MANUAL"
+                                      }
+                                    },
+                                    "errorHandlingOptions": {
+                                      "retryOnFailure": {
+                                        "value": false
+                                      },
+                                      "continueOnFailure": {
+                                        "value": false
+                                      }
+                                    }
+                                  },
+                                  "displayName": "Update Projected Task",
+                                  "lastUpdatedDate": "2026-09-05T16:44:50.158Z"
+                                },
+                                "displayName": "Prepare Google Update",
+                                "lastUpdatedDate": "2026-09-05T16:44:50.158Z"
+                              },
+                              "lastUpdatedDate": "2026-09-05T16:44:50.157Z"
+                            },
+                            "displayName": "Create Missing Projections",
+                            "firstLoopAction": {
+                              "name": "step_11",
+                              "skip": false,
+                              "type": "PIECE",
+                              "valid": true,
+                              "settings": {
+                                "input": {
+                                  "due": "{{step_10['output']['item']['due']}}",
+                                  "auth": "",
+                                  "notes": "{{step_10['output']['item']['notes']}}",
+                                  "title": "{{step_10['output']['item']['title']}}",
+                                  "completed": false,
+                                  "tasks_list": "{{step_21['output']['listId']}}"
+                                },
+                                "pieceName": "@activepieces/piece-google-tasks",
+                                "actionName": "add_task",
+                                "sampleData": {},
+                                "pieceVersion": "0.5.3",
+                                "propertySettings": {
+                                  "due": {
+                                    "type": "MANUAL"
+                                  },
+                                  "notes": {
+                                    "type": "MANUAL"
+                                  },
+                                  "title": {
+                                    "type": "MANUAL"
+                                  },
+                                  "completed": {
+                                    "type": "MANUAL"
+                                  },
+                                  "tasks_list": {
+                                    "type": "DYNAMIC"
+                                  }
+                                },
+                                "errorHandlingOptions": {
+                                  "retryOnFailure": {
+                                    "value": false
+                                  },
+                                  "continueOnFailure": {
+                                    "value": false
+                                  }
+                                }
+                              },
+                              "displayName": "Add Projected Task",
+                              "lastUpdatedDate": "2026-09-05T16:44:50.157Z"
+                            },
+                            "lastUpdatedDate": "2026-09-05T16:44:50.156Z"
+                          },
+                          "displayName": "Reconcile Kestrel Today",
+                          "lastUpdatedDate": "2026-09-05T16:44:50.156Z"
+                        },
+                        "displayName": "Read Kestrel Today",
+                        "lastUpdatedDate": "2026-09-05T16:44:50.156Z"
+                      },
+                      "displayName": "Resolve Kestrel Today List",
+                      "lastUpdatedDate": "2026-09-05T16:44:50.155Z"
+                    },
+                    "displayName": "List Google Task Lists",
+                    "lastUpdatedDate": "2026-09-05T16:44:50.155Z"
+                  },
+                  "displayName": "Prepare Google Projection",
+                  "lastUpdatedDate": "2026-09-05T16:45:10.796Z"
+                },
+                "displayName": "Build Candidate Today",
+                "lastUpdatedDate": "2026-09-05T16:44:50.154Z"
+              },
+              "displayName": "Normalize Nextcloud Tasks",
+              "lastUpdatedDate": "2026-09-05T16:44:50.189Z"
+            },
+            "displayName": "Read Classes Tasks",
+            "lastUpdatedDate": "2026-09-05T16:44:50.154Z"
+          },
+          "displayName": "Read Personal Tasks",
+          "lastUpdatedDate": "2026-09-05T16:44:50.154Z"
+        },
+        "lastUpdatedDate": "2026-09-05T16:44:50.154Z",
+        "type": "PIECE_TRIGGER",
+        "settings": {
+          "sampleData": {},
+          "propertySettings": {
+            "run_on_weekends": {
+              "type": "MANUAL"
+            }
+          },
+          "pieceName": "@activepieces/piece-schedule",
+          "pieceVersion": "0.1.22",
+          "triggerName": "every_hour",
+          "input": {
+            "run_on_weekends": true
+          }
+        }
+      },
+      "valid": true,
+      "schemaVersion": "24",
+      "notes": []
+    }
+  ],
+  "status": "PUBLISHED"
+}
