@@ -12,6 +12,12 @@ least-privilege, human-controlled design are welcome.
 - Keep integrations modular so users are not forced into a particular cloud provider or personal
   information system.
 
+## AI-assisted contributions
+
+AI-assisted contributions are welcome. If generative AI materially produced code or documentation
+included in a contribution, contributors should disclose that assistance when practical and remain
+responsible for testing and reviewing what they submit.
+
 ## Development workflow
 
 Until a more formal workflow is established:
