@@ -31,7 +31,10 @@ Today, Kestrel can:
 - reconcile the Google projection idempotently;
 - run the projection workflow hourly.
 
-The current planner **does not use an LLM**.
+The current planner **does not use an LLM at runtime**.
+
+Kestrel's development has made substantial use of generative AI; see
+[AI-assisted development](#ai-assisted-development).
 
 Ollama is included in the local stack for future reasoning capabilities, but the working daily
 planner continues to function without model inference.
@@ -108,6 +111,7 @@ Detailed policy, scoring, and ranking behavior are documented in:
 ```text
 Kestrel/
 ├── docs/
+│   ├── ai-usage.md
 │   ├── architecture.md
 │   ├── guided-setup-prompt.md
 │   ├── planner-policy.md
@@ -328,6 +332,7 @@ The goal is not to gradually grant one autonomous agent unrestricted access to e
 
 | Document | Purpose |
 | --- | --- |
+| [`docs/ai-usage.md`](docs/ai-usage.md) | AI-assisted development disclosure and attribution |
 | [`docs/architecture.md`](docs/architecture.md) | Current and future system architecture |
 | [`docs/security-model.md`](docs/security-model.md) | Trust boundaries, permissions, and threat model |
 | [`docs/planner-policy.md`](docs/planner-policy.md) | Deterministic planner behavior and scoring |

@@ -63,8 +63,8 @@ person to deploy.
 - [x] Document required Activepieces project variables.
 - [x] Document Nextcloud least-privilege requirements.
 - [x] Document Google Tasks configuration and first-run validation.
-- [ ] Create an LLM-guided setup prompt.
-- [ ] Update the README to describe the working prototype and recommended setup path.
+- [x] Create an LLM-guided setup prompt.
+- [x] Update the README to describe the working prototype and recommended setup path.
 - [ ] Review documentation for consistency and remove stale prototype-era instructions.
 - [ ] Perform a clean-install walkthrough using only the public repository and guided setup
   material.
