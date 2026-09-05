@@ -569,9 +569,14 @@ If implementation and documentation disagree:
 
 Do not manually reconstruct the flow from prose documentation as the normal installation path.
 
-## Guided setup expectations
+## Guided setup
 
-A future guided setup prompt should use this document as reference and should:
+The repository provides:
+
+[`guided-setup-prompt.md`](guided-setup-prompt.md)
+
+The guided setup prompt uses this document as its configuration reference and instructs the setup
+assistant to:
 
 - proceed one logical step at a time;
 - wait for the user to report the result of each important step;

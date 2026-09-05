@@ -34,6 +34,7 @@ The first deterministic task-planning pipeline is operational.
 - [x] Dynamically resolve the `Kestrel Today` Google list rather than hardcoding its ID.
 - [x] Publish a sanitized, importable Activepieces flow template.
 - [x] Document planner policy, setup requirements, architecture, and security boundaries.
+- [x] Document AI-assisted development and attribution.
 
 The canonical flow is:
 
@@ -51,7 +52,7 @@ Google "Kestrel Today"
     = derived projection
 ```
 
-The current planner is deterministic and does not require an LLM.
+The current planner is deterministic and does not require an LLM at runtime.
 
 ## Reproducible onboarding
 
@@ -65,7 +66,7 @@ person to deploy.
 - [x] Document Google Tasks configuration and first-run validation.
 - [x] Create an LLM-guided setup prompt.
 - [x] Update the README to describe the working prototype and recommended setup path.
-- [ ] Review documentation for consistency and remove stale prototype-era instructions.
+- [x] Review documentation for consistency and remove stale prototype-era instructions.
 - [ ] Perform a clean-install walkthrough using only the public repository and guided setup
   material.
 - [ ] Record any compatibility limitations discovered during a clean installation.

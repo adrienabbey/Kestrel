@@ -295,8 +295,10 @@ At minimum, establish:
 
 Do not reinstall or replace working infrastructure unnecessarily.
 
-If the current host differs from the repository's tested hardware configuration, explain the
-difference before recommending changes.
+If the current host differs from hardware assumptions visible in `compose.yaml` — especially the
+ROCm-specific Ollama configuration — explain the difference before recommending changes.
+
+Do not assume a specific tested hardware model unless the repository documents one.
 
 The current Compose file contains a ROCm-enabled Ollama service. Remember that Ollama is not
 required for the deterministic planner itself.

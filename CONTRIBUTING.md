@@ -1,7 +1,7 @@
 # Contributing to Kestrel
 
-Kestrel is in an early design and prototyping stage. Contributions that preserve its local-first,
-least-privilege, human-controlled design are welcome.
+Kestrel is in early experimental development, with a working task-planning prototype. Contributions
+that preserve its local-first, least-privilege, human-controlled design are welcome.
 
 ## Before contributing
 

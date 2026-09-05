@@ -7,8 +7,8 @@ The canonical executable implementation is:
 
 [`flows/build-kestrel-today.json`](../flows/build-kestrel-today.json)
 
-This policy is intentionally deterministic. It does not currently use an LLM to decide which tasks
-appear in the daily plan.
+This policy is intentionally deterministic. It does not currently use an LLM at runtime to decide
+which tasks appear in the daily plan.
 
 ## Goals
 

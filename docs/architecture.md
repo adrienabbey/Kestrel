@@ -333,7 +333,7 @@ Unmanaged Google tasks are not treated as canonical Kestrel records.
 
 ## Deterministic planner
 
-The current planner does not use an LLM.
+The current planner does not use an LLM at runtime.
 
 This is intentional.
 
